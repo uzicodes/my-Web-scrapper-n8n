@@ -1,6 +1,7 @@
 # My Web Scrapper
 
 A simple web scraping project to extract and process data from websites. This repository contains the configuration file `my Web-scrapper.json` and the main code for scraping.
+<br> </br>
 ![Screenshot](screenshot.png)
 ## Features
 - Easy configuration using JSON
