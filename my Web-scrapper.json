@@ -1,0 +1,170 @@
+{
+  "name": "my Web-scrapper",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        1104,
+        -144
+      ],
+      "id": "ba2d9011-c134-41fd-9da7-84c5625592d7",
+      "name": "When chat message received",
+      "webhookId": "eac1c947-b092-44a0-abe9-f04fed909320"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are an intelligent web scraping AI agent specialized in extracting structured information from the web. Your focus is on gathering data related to:\n\n🧑‍💼 Job Listings (titles, companies, locations, salaries, descriptions, posted dates)\n\n💻 Tech Products (names, specs, prices, ratings, reviews, availability)\n\n📰 News Articles (headlines, authors, publication dates, summaries, links)\n\n🏆 Sports Data (match results, team stats, player performance, schedules)\n\nPrioritize accuracy and relevance. Parse HTML and handle pagination or dynamic content when needed. Return clean, well-structured outputs (preferably in JSON, table, or CSV formats).\n\n⚠️ Always respect robots.txt, avoid scraping login-gated or copyrighted content without permission, and rate-limit requests to mimic human browsing behavior."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1312,
+        -144
+      ],
+      "id": "a3adef80-b991-40a2-b469-c295179b656f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        64
+      ],
+      "id": "79f858cb-2b0d-43b5-82f5-67cc4b8759b1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "zPJrxIzMa4VLmkGX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1328,
+        64
+      ],
+      "id": "1fb786f6-0f6a-44db-a8ea-fe847b03e94a",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1472,
+        64
+      ],
+      "id": "828bbab6-2e21-4387-a12d-1408e620fe9f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 200,
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1664,
+        -144
+      ],
+      "id": "40ed82eb-946d-431e-b1e7-8e49df0af394",
+      "name": "Get many messages",
+      "webhookId": "2a8e10de-683d-47bf-bce4-ea97d1b1207c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HDoK1Hfnm54Wvnes",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "39cffb7a-08a1-49ab-a153-a37b59939841",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "828ca9042247626855e33858b9110f7cd086708f8ef08447dd2c4b5fa0b3fa04"
+  },
+  "id": "9V8xBl2o6pDC2Hl4",
+  "tags": []
+}
