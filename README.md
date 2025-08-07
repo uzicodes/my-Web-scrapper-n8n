@@ -16,8 +16,6 @@ A simple web scraping project to extract and process data from websites. This re
 2. Add your configuration to `my Web-scrapper.json`.
 3. Run the scraper according to your setup.
 
-## Screenshot
-Below is a screenshot of the application in action:
 
 ## Contributing
 Feel free to fork the repo and submit pull requests for improvements or bug fixes.
